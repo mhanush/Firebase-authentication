@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "vrapp",
+    "slug": "vrapp",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
