@@ -1,10 +1,19 @@
 import { useNavigation } from '@react-navigation/core'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { auth } from '../firebase'
+import { auth } from '../firebase.js'
 
 const HomeScreen = () => {
   const navigation = useNavigation()
+  const [currentUser, setCurrentUser] = useState(null); // State to hold the current user
+
+  // useEffect to listen for changes in authentication state
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      setCurrentUser(user); // Update the current user state
+    });
+    return unsubscribe; // Cleanup function
+  }, []);
 
   const handleSignOut = () => {
     auth
@@ -17,7 +26,7 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Email: {auth.currentUser?.email}</Text>
+      <Text>Email: {currentUser ? currentUser.email : 'No user signed in'}</Text>
       <TouchableOpacity
         onPress={handleSignOut}
         style={styles.button}
